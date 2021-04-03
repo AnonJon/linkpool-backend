@@ -36,19 +36,20 @@ func main() {
 	models.ConnectDatabase()
 
 	// Routes
-	router.GET("api/prices", controllers.GetPrices)              //get all prices in DB
-	router.GET("api/latestPrice", controllers.GetLatestPrice)    // get latest price from contract
-	router.GET("api/prices/:round", controllers.FindPrice)       // get specific price info from DB
-	router.GET("api/roundInfo/:round", controllers.RoundInfo)    // get all round info from contract from specific round
-	router.POST("api/prices", controllers.AddPrice)              // Post new price info into DB
-	router.GET("api/getLatestInfo", controllers.SaveNewestPrice) // Post new price info into DB
-	router.GET("api/getLastIndex", controllers.GetLastPrice)     // Get last index info in DB
-	router.GET("api/getLatestRound", controllers.GetLatestInfo)  // Get latest round info from Contract
-	router.GET("api/getLastX/:num", controllers.GetLastX)        // Get last X entries in DB
+	router.GET("api/prices", controllers.GetPrices)               //get all prices in DB
+	router.GET("api/latestPrice", controllers.GetLatestPrice)     // get latest price from contract
+	router.GET("api/prices/:round", controllers.FindPrice)        // get specific price info from DB
+	router.GET("api/roundInfo/:round", controllers.RoundInfo)     // get all round info from contract from specific round
+	router.POST("api/prices", controllers.AddPrice)               // Post new price info into DB
+	router.GET("api/getLatestInfo", controllers.SaveNewestPrice)  // Post new price info into DB
+	router.GET("api/getLastIndex", controllers.GetLastPrice)      // Get last index info in DB
+	router.GET("api/getLatestRound", controllers.GetLatestInfo)   // Get latest round info from Contract
+	router.GET("api/getLastX/:num", controllers.GetLastX)         // Get last X entries in DB
+	router.DELETE("api/deletePrice/:id", controllers.DeletePrice) // Delete round by id
 
 	// Start server
 	go controllers.SubscribeToEvent()
-	go controllers.WatchAnswerUpdatedFunc()
+	// go controllers.WatchAnswerUpdatedFunc()
 	// go contracts.ReadEventLogs()
 	router.Run()
 

@@ -125,6 +125,18 @@ func GetLatestInfo(c *gin.Context) {
 
 }
 
+// DELETE round by id
+func DeletePrice(c *gin.Context) {
+	var price models.Price
+	if err := models.DB.Where("id = ?", c.Param("id")).First(&price).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found"})
+		return
+	}
+	models.DB.Delete(&price)
+	c.JSON(http.StatusOK, gin.H{"data": "deleted"})
+
+}
+
 // Cron job loop to check when a new round has been entered
 func SaveNewestPriceCron() {
 	fmt.Println("Checking for updates on round update...")
