@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jongregis/linkPoolBackend/contracts"
+	"github.com/jongregis/linkPoolBackend/env"
 	"github.com/jongregis/linkPoolBackend/models"
 
 	"github.com/ethereum/go-ethereum"
@@ -141,8 +142,9 @@ func SaveNewestPriceCron() {
 
 //subscribing to event
 func SubscribeToEvent() {
+	viperenv := env.ViperEnvVariable("WSS")
 	fmt.Println("Starting Event Subscription...")
-	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -190,10 +192,11 @@ func SubscribeToEvent() {
 }
 
 func WatchAnswerUpdatedFunc() {
+	viperenv := env.ViperEnvVariable("WSS")
 	fmt.Println("Starting WatchAnswerUpdated...")
 	var current []*big.Int
 	var roundId []*big.Int
-	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}

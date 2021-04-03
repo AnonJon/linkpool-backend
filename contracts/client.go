@@ -13,11 +13,13 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/jongregis/linkPoolBackend/env"
 )
 
 // init of the contract instance
 func getContract() *AccessControlledAggregator {
-	client, err := ethclient.Dial("https://mainnet.infura.io/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	viperenv := env.ViperEnvVariable("HTTPS")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,7 +33,8 @@ func getContract() *AccessControlledAggregator {
 
 // still trying to figure out event watching??
 func watchContract() *AccessControlledAggregator {
-	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	viperenv := env.ViperEnvVariable("WSS")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,8 +49,10 @@ func watchContract() *AccessControlledAggregator {
 
 //subscribing to event
 func SubscribeToEventContract() {
+	viperenv := env.ViperEnvVariable("WSS")
+
 	fmt.Println("Starting Event Subscription...")
-	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -72,8 +77,10 @@ func SubscribeToEventContract() {
 
 // Reading the event log
 func ReadEventLogs() {
+	viperenv := env.ViperEnvVariable("WSS")
+
 	fmt.Println("Reading Event Logs...")
-	client, err := ethclient.Dial("wss://mainnet.infura.io/ws/v3/ea3acd555ebc4ecaa75eb1ca9f6f8d25")
+	client, err := ethclient.Dial(viperenv)
 	if err != nil {
 		log.Fatal(err)
 	}

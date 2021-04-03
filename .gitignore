@@ -1,3 +1,4 @@
 makefile
 db
 sqlc.yaml
+.env
